@@ -13,12 +13,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+import os
 import webapp2
+import jinja2
 
-class MainHandler(webapp2.RequestHandler):
+from google.appengine.ext import db
+
+template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+jinja2_env = jinja2.Enviornment(loader = jinja2.FileSystemLoader(template.dir),
+                                 autoescape = True
+
+class Handler(webapp2.RequestHandler):
+    def write(self, *a, **kw):
+        self.response.out.write(*a, **kw)
+
+    def render_str(self, template, **params):
+        t = jinja2_env.get_template(template)
+        return t.render(params)
+
+    def render (slef, template, **kw):
+        self.write(self.render_str(template, **kw))
+
+class MainHandler(Handler):
     def get(self):
-        self.response.write('Hello world!')
+        self.response.write('Build-a-Blog')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
