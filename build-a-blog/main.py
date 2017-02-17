@@ -26,10 +26,11 @@ class Blog(db.Model):
 class MainHandler(Handler):
     def render_post_form(self, topic = "", blog = "", error = ""):
         blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT 5;")
-        self.render("new_post_form.html", topic = topic, blog = blog, error = error, blogs = blogs)
+        self.render("blog_list.html", topic = topic, blog = blog, error = error, blogs = blogs)
 
     def get(self):
         self.render_post_form()
+
 
     def post(self):
         topic = self.request.get("topic")
@@ -43,6 +44,10 @@ class MainHandler(Handler):
         else:
             error = "please enter both a topic and a blog"
             self.render_post_form(topic, blog, error)
+
+
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
