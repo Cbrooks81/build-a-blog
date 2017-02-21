@@ -1,4 +1,4 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -6,6 +6,7 @@
 
 {% for blog in blogs %}
   <div class = "blog">
+    <div class = "topic-blog"><a href = '/blog/{{blog.key().id() }}'>{{ blog.topic }}</a></div>
     <pre class = "blog-body">{{blog.blog}}</pre>
   </div>
 
